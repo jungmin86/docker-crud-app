@@ -1,0 +1,29 @@
+{
+  "name": "react-boiler-plate",
+  "version": "1.0.0",
+  "description": "react boiler plate",
+  "main": "server.js",
+  "engine": {
+      "node": "10.16.0",
+      "npm": "6.9.0"
+  },
+  "scripts": {
+      "start": "node server.js",
+      "backend": "nodemon server.js",
+      "frontend": "npm run start --prefix ../frontend",
+      "dev": "concurrently \"npm run backend\" \"npm run start --prefix ../frontend\""
+  },
+  "author": "John ahn",
+  "license": "ISC",
+  "dependencies": {
+      "body-parser": "^1.20.2",
+      "express": "^4.18.2",
+      "mysql2": "^3.2.0",
+      "sequelize": "^6.29.1",
+      "sequelize-cli": "^6.6.0"
+  },
+  "devDependencies": {
+      "concurrently": "^4.1.0",
+      "nodemon": "^1.19.1"
+  }
+}
