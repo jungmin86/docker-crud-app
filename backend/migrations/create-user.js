@@ -12,11 +12,11 @@ module.exports = {
                 // auto_increment
                 autoIncrement: true
             },
-            firstName: {
+            name: {
                 type: Sequelize.STRING(10),
                 allowNull: false
             },
-            lastName: {
+            lastname: {
                 type: Sequelize.STRING(10),
                 allowNull: false
             },

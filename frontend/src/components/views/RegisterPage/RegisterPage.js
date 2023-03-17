@@ -2,8 +2,10 @@ import React from "react";
 import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { registerUser } from "../../../_actions/user_actions";
+import { registerUser } from "../../../_actions/user_actions.js";
 import { useDispatch } from "react-redux";
+
+
 
 import {
   Form,
@@ -68,15 +70,17 @@ function RegisterPage(props) {
             email: values.email,
             password: values.password,
             name: values.name,
-            lastname: values.lastname,
+            lastname: values.lastName,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
-
-          dispatch(registerUser(dataToSubmit)).then(response => {
+          
+          dispatch(registerUser(dataToSubmit))
+          .then(response => {
             if (response.payload.success) {
               props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg)
+              alert("홈페이지로 이동 실패");
+              console.log(response);
             }
           })
 

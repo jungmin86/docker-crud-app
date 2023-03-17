@@ -16,11 +16,11 @@ let User = (Sequelize, DataTypes) => {
                 // auto_increment
                 autoIncrement: true
             },
-            firstName: {
+            name: {
                 type: DataTypes.STRING(10),
                 allowNull: false
             },
-            lastName: {
+            lastname: {
                 type: DataTypes.STRING(10),
                 allowNull: false
             },
@@ -51,5 +51,4 @@ let User = (Sequelize, DataTypes) => {
     return model;
 }
 
-// Visitor를 내보내는데 이는 곧 Visitor함수에서 return된 model.
 module.exports = User;

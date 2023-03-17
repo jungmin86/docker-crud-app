@@ -1,4 +1,4 @@
-const { response } = require('express');
+
 const express = require('express');
 const router = express.Router();
 const models = require("../models");
@@ -13,14 +13,14 @@ router.post("/register", (req, res, next) => {
     let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
 
     models.User.create({
-        firstName: body.firstName,
-        lastName: body.lastName,
+        name: body.name,
+        lastname: body.lastname,
         email: body.email,
         password: hashPassword,
         salt: salt
     })
     .then( response => {
-        return res.status(200).json({registerSuccess: true, response});
+        return res.status(200).json({ success: true, response});
     })
     .catch(err => {
         console.log(err);
