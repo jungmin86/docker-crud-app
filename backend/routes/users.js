@@ -8,9 +8,8 @@ const jwt = require('jsonwebtoken');
 
 
 router.get('/auth', auth, (req, res) => {
-  console.log("ㄲㄲㄲㄲ", req.user);
   //여기까지 미들웨어를 통과해 왔다 -> Authentication이 true
-  res.status(200).json( {
+  return res.status(200).json( {
     id: req.user.id,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
@@ -50,12 +49,13 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post("/login", (req, res, next) => {
-  console.log("로그인 api"); //이건 나옴
+  // console.log("로그인 api"); //이건 나옴
   models.User.findOne({
       where: {
           email : req.body.email
       }
   }).then(user => {
+    console.log(`user:${user}`);
     if(!user)  {
       return res.json({
         loginSuccess: false,
@@ -85,9 +85,8 @@ router.post("/login", (req, res, next) => {
     user.update(newObj, {where: {email: user.email}})
     .then((result) => {
         console.log( result );
+        return res.status(200).json({success:true, userId: user.id});
     })
-        return res.status(200).json({success:true})
-
    }
    else{
        console.log("비밀번호 불일치");
@@ -97,7 +96,25 @@ router.post("/login", (req, res, next) => {
   })
       
    
+router.get("/logout", auth, (req, res) => {
 
+  let newObj = {
+    token : "",
+    tokenExp: ""
+  };
+  models.User.update(newObj, {where: {id: req.user.id}})
+  .then((err, result) => {
+      if(err) return res.json({ success: false, err});
+      console.log( result );
+      return res.status(200).json({success:true});
+})
+  // User.findOneAndUpdate({ id: req.user.id }, { token: "", tokenExp: "" }, (err, doc) => {
+  //     if (err) return res.json({ success: false, err });
+  //     return res.status(200).send({
+  //         success: true
+  //     });
+  // });
+});
 
 
 

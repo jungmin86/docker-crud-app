@@ -15,13 +15,6 @@ app.use(cookieParser());
 db.sequelize.sync();
 
 app.get('/', function(req, res){
-//    db.User.create({
-//        firstName: req.body.firstName,
-//        lastName: req.body.lastName,
-//        email: req.body.email,
-//        password: req.body.password,
-//        role: 0
-//    });
    return res.status(200).json({
     success: true
    })
@@ -29,6 +22,6 @@ app.get('/', function(req, res){
 
 app.use('/api/users', require('./routes/users.js'));
 
-app.listen(5000, function() {
+app.listen(5050, function() {
     console.log('Server Running at http://127.0.0.1:');
 });

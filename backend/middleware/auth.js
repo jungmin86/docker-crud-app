@@ -16,15 +16,49 @@ let auth = (req, res, next) => {
     //     next(); //안쓰면 미들웨어에 갇힘
 
     // })
-    jwt.verify(token, 'secretToken', function(err, decoded) {
+    jwt.verify(token, "secretToken", function (err, decoded) {
+        
+        // let decoded = jwt.verify(token, "secretToken");
+        // if(!decoded) {
+        //     console.log("유효하지 않은 토큰");
+        // }
+        //     models.User.findOne({ where: { token: token } })
+        //   .then(user => {
+        //     if (!user)
+        //         return res.json({
+        //             isAuth: false,
+        //             error: true
+        //         });
+        //     req.token = token;
+        //     req.user = user;
+        //     next();
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     return err;
+        //   });
         //유저 아이디를 이용해서 유저를 찾은 다음에 클라이언트에서 가져온 토큰과 DB의 토큰이 일치하는지?
-        if(err) throw err;
-        models.User.findOne({where:{"id": decoded, "token": token}}, function(err, user) {
-            if(err) return cb(err);
-            cb(null, user);
+        if (err) throw err;
+        console.log(`decoded:${JSON.stringify(decoded)}`);
+        models.User.findOne({ where: {id: decoded.id, token: token } })
+          .then((user) => {
+            if (!user)
+                return res.json({
+                    isAuth: false,
+                    error: true
+                });
+            req.token = token;
+            req.user = user;
             next();
+          })
+          .catch((err) => {
+            console.log(err);
+            return err;
+          });
         })
-    })
+        // if(err) return cb(err);
+        // cb(null, user);
+    
     
     //유저가 있으면 인증 OK
 
