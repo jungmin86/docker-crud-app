@@ -40,6 +40,12 @@ let User = (Sequelize, DataTypes) => {
             },
             salt: {
                 type: DataTypes.STRING
+            },
+            token: {
+                type: DataTypes.STRING
+            },
+            tokenEXP: {
+                type: DataTypes.STRING
             }
         }, 
         {
@@ -73,10 +79,10 @@ User.generateToken = function() {
     let newObj = {
         token : user.token
     };
-    // user.update(newObj, {where: {email: user.email}})
-    // .then((result) => {
-    //     console.log( result );
-    // })
+    user.update(newObj, {where: {email: user.email}})
+    .then((result) => {
+        console.log( result );
+    })
 }
 
 

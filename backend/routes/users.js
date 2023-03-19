@@ -7,10 +7,11 @@ const { auth } = require("../middleware/auth.js");
 const jwt = require('jsonwebtoken');
 
 
-router.get('/api/users/auth', auth, (req, res) => {
+router.get('/auth', auth, (req, res) => {
+  console.log("ㄲㄲㄲㄲ", req.user);
   //여기까지 미들웨어를 통과해 왔다 -> Authentication이 true
   res.status(200).json( {
-    _id: req.user._id,
+    id: req.user.id,
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user.email,
@@ -61,7 +62,7 @@ router.post("/login", (req, res, next) => {
         message: "Auth failed, email not found"
      });
     }
-
+    // console.log(user);
    let dbPassword = user.dataValues.password;
    let inputPassword = req.body.password;
    let salt = user.dataValues.salt;
@@ -77,14 +78,20 @@ router.post("/login", (req, res, next) => {
         expiresIn: '10m'
         });
         res.cookie("x_auth", token).status(200);
-        console.log("토큰 생김");
+        user.token = token;
+        let newObj = {
+        token : user.token
+    };
+    user.update(newObj, {where: {email: user.email}})
+    .then((result) => {
+        console.log( result );
+    })
         return res.status(200).json({success:true})
 
    }
    else{
        console.log("비밀번호 불일치");
-      //  res.redirect("/user/login");
-       return res.status(400).json({success: false});
+       return res.status(500).json({success: false});
    }
   });
   })
