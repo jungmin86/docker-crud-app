@@ -4,7 +4,9 @@ var db = require('./models/index.js');
 const bodyParser = require('body-parser');
 const { request } = require('http');
 const cookieParser = require('cookie-parser');
+const cors  = require('cors');
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

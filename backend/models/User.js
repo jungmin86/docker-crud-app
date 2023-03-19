@@ -53,7 +53,14 @@ let User = (Sequelize, DataTypes) => {
     return model;
 }
 
-User.generateToken = function(cb) {
+// User.comparePassword = function(plainPassword){
+//     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
+//         if (err) return cb(err);
+//         cb(null, isMatch)
+//     })
+// }
+
+User.generateToken = function() {
 
     var user = this;
     //jsonwebtoken을 이용해서 토큰 생성
@@ -71,6 +78,8 @@ User.generateToken = function(cb) {
     //     console.log( result );
     // })
 }
+
+
 
 User.findByToken = function(token, cb) {
     var user = this;

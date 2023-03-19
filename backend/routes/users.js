@@ -4,6 +4,8 @@ const router = express.Router();
 const models = require("../models");
 const crypto = require('crypto');
 const { auth } = require("../middleware/auth.js");
+const jwt = require('jsonwebtoken');
+
 
 router.get('/api/users/auth', auth, (req, res) => {
   //여기까지 미들웨어를 통과해 왔다 -> Authentication이 true
@@ -52,43 +54,43 @@ router.post("/login", (req, res, next) => {
       where: {
           email : req.body.email
       }
-  }, (err, user) => {
-    console.log("ㄷㄷㄷㄷ"); //여기부터 안나옴
+  }).then(user => {
     if(!user)  {
       return res.json({
         loginSuccess: false,
         message: "Auth failed, email not found"
      });
     }
-      
-   let dbPassword = result.dataValues.password;
+
+   let dbPassword = user.dataValues.password;
    let inputPassword = req.body.password;
-   let salt = result.dataValues.salt;
+   let salt = user.dataValues.salt;
    let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
  
    if(dbPassword === hashPassword){
        console.log("비밀번호 일치");
-       res.redirect("/");
- 
-       user.generateToken((err, user) => {
-         if(err) return res.status(400).send(err);
-         //토큰을 저장한다. 어디에? 쿠키? 로컬스토리지? -> 쿠키
-         else {
-           res.cookie("x_auth", user.token)
-         .status(200).json({ success: true, userId: user.id });
-         return res.status(200).json({success: true, result});
-         }
-       })
+       var token = jwt.sign({
+        id: user.dataValues.id
+       },
+        "secretToken",
+        {
+        expiresIn: '10m'
+        });
+        res.cookie("x_auth", token).status(200);
+        console.log("토큰 생김");
+        return res.status(200).json({success:true})
+
    }
    else{
        console.log("비밀번호 불일치");
-       res.redirect("/user/login");
+      //  res.redirect("/user/login");
        return res.status(400).json({success: false});
    }
   });
+  })
+      
+   
 
-
-});
 
 
 
