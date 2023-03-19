@@ -4,26 +4,29 @@
   "description": "react boiler plate",
   "main": "server.js",
   "engine": {
-      "node": "10.16.0",
-      "npm": "6.9.0"
+    "node": "10.16.0",
+    "npm": "6.9.0"
   },
   "scripts": {
-      "start": "node server.js",
-      "backend": "nodemon server.js",
-      "frontend": "npm run start --prefix ../frontend",
-      "dev": "concurrently \"npm run backend\" \"npm run start --prefix ../frontend\""
+    "start": "node server.js",
+    "backend": "nodemon server.js",
+    "frontend": "npm run start --prefix ../frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix ../frontend\""
   },
+  "proxy": "http://localhost:5000",
   "author": "John ahn",
   "license": "ISC",
   "dependencies": {
-      "body-parser": "^1.20.2",
-      "express": "^4.18.2",
-      "mysql2": "^3.2.0",
-      "sequelize": "^6.29.1",
-      "sequelize-cli": "^6.6.0"
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.29.1",
+    "sequelize-cli": "^6.6.0"
   },
   "devDependencies": {
-      "concurrently": "^4.1.0",
-      "nodemon": "^1.19.1"
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.1"
   }
 }
