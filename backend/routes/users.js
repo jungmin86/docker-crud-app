@@ -5,6 +5,7 @@ const models = require("../models");
 const crypto = require('crypto');
 const { auth } = require("../middleware/auth.js");
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 
 router.get('/auth', auth, (req, res) => {
@@ -75,12 +76,18 @@ router.post("/login", (req, res, next) => {
        },
         "secretToken",
         {
-        expiresIn: '10m'
+        expiresIn: '1h'
         });
+        var oneHour = moment().add(1, 'hour').valueOf();
+
+
         res.cookie("x_auth", token).status(200);
-        user.token = token;
+        res.cookie("x_authEXP", oneHour);
+        // user.token = token;
+        // user.tokenExp = oneHour;
         let newObj = {
-        token : user.token
+        token : token,
+        tokenEXP: oneHour
     };
     user.update(newObj, {where: {email: user.email}})
     .then((result) => {
@@ -100,7 +107,7 @@ router.get("/logout", auth, (req, res) => {
 
   let newObj = {
     token : "",
-    tokenExp: ""
+    tokenEXP: ""
   };
   models.User.update(newObj, {where: {id: req.user.id}})
   .then((err, result) => {

@@ -66,38 +66,38 @@ let User = (Sequelize, DataTypes) => {
 //     })
 // }
 
-User.generateToken = function() {
+// User.generateToken = function() {
 
-    var user = this;
-    //jsonwebtoken을 이용해서 토큰 생성
-    var token = jwt.sign(user.id.toJSON(),
-        "secretToken",
-        {
-        expiresIn: '10m'
-    });
-    user.token = token;
-    let newObj = {
-        token : user.token
-    };
-    user.update(newObj, {where: {email: user.email}})
-    .then((result) => {
-        console.log( result );
-    })
-}
+//     var user = this;
+//     //jsonwebtoken을 이용해서 토큰 생성
+//     var token = jwt.sign(user.id.toJSON(),
+//         "secretToken",
+//         {
+//         expiresIn: '10m'
+//     });
+//     user.token = token;
+//     let newObj = {
+//         token : user.token
+//     };
+//     user.update(newObj, {where: {email: user.email}})
+//     .then((result) => {
+//         console.log( result );
+//     })
+// }
 
 
 
-User.findByToken = function(token, cb) {
-    var user = this;
-    //토큰  복호화
-    jwt.verify(token, 'secretToken', function(err, decoded) {
-        //유저 아이디를 이용해서 유저를 찾은 다음에 클라이언트에서 가져온 토큰과 DB의 토큰이 일치하는지?
-        user.findOne({where:{"id": decoded, "token": token}}, function(err, user) {
-            if(err) return cb(err);
-            cb(null, user);
-        })
-    })
-}
+// User.findByToken = function(token, cb) {
+//     var user = this;
+//     //토큰  복호화
+//     jwt.verify(token, 'secretToken', function(err, decoded) {
+//         //유저 아이디를 이용해서 유저를 찾은 다음에 클라이언트에서 가져온 토큰과 DB의 토큰이 일치하는지?
+//         user.findOne({where:{"id": decoded, "token": token}}, function(err, user) {
+//             if(err) return cb(err);
+//             cb(null, user);
+//         })
+//     })
+// }
 
 
 
