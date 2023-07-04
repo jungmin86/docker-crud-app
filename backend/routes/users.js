@@ -83,8 +83,7 @@ router.post("/login", (req, res, next) => {
 
         res.cookie("x_auth", token).status(200);
         res.cookie("x_authEXP", oneHour);
-        // user.token = token;
-        // user.tokenExp = oneHour;
+
         let newObj = {
         token : token,
         tokenEXP: oneHour
@@ -115,12 +114,7 @@ router.get("/logout", auth, (req, res) => {
       console.log( result );
       return res.status(200).json({success:true});
 })
-  // User.findOneAndUpdate({ id: req.user.id }, { token: "", tokenExp: "" }, (err, doc) => {
-  //     if (err) return res.json({ success: false, err });
-  //     return res.status(200).send({
-  //         success: true
-  //     });
-  // });
+
 });
 
 
