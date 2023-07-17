@@ -49,57 +49,66 @@ router.get('/login', function(req, res, next) {
     res.render("/login");
 });
 
+
+const comparePassword = (plainPassword, hashedPassword, salt) => {
+  let hashPassword = crypto.createHash("sha512").update(plainPassword + salt).digest("hex");
+  return hashPassword === hashedPassword;
+};
+
+const generateToken = (user) => {
+  const token = jwt.sign(
+      {
+          id: user.dataValues.id
+      },
+      "secretToken",
+      {
+          expiresIn: '1h'
+      }
+  );
+  const oneHour = moment().add(1, 'hour').valueOf();
+
+  return {
+      token: token,
+      tokenEXP: oneHour
+  };
+};
+
 router.post("/login", (req, res, next) => {
-  // console.log("로그인 api"); //이건 나옴
   models.User.findOne({
       where: {
-          email : req.body.email
+          email: req.body.email
       }
   }).then(user => {
-    console.log(`user:${user}`);
-    if(!user)  {
-      return res.json({
-        loginSuccess: false,
-        message: "Auth failed, email not found"
-     });
-    }
-    // console.log(user);
-   let dbPassword = user.dataValues.password;
-   let inputPassword = req.body.password;
-   let salt = user.dataValues.salt;
-   let hashPassword = crypto.createHash("sha512").update(inputPassword + salt).digest("hex");
- 
-   if(dbPassword === hashPassword){
-       console.log("비밀번호 일치");
-       var token = jwt.sign({
-        id: user.dataValues.id
-       },
-        "secretToken",
-        {
-        expiresIn: '1h'
-        });
-        var oneHour = moment().add(1, 'hour').valueOf();
+      if (!user) {
+          return res.json({
+              loginSuccess: false,
+              message: "Auth failed, email not found"
+          });
+      }
 
+      let dbPassword = user.dataValues.password;
+      let inputPassword = req.body.password;
+      let salt = user.dataValues.salt;
 
-        res.cookie("x_auth", token).status(200);
-        res.cookie("x_authEXP", oneHour);
+      if (comparePassword(inputPassword, dbPassword, salt)) {
+          console.log("비밀번호 일치");
 
-        let newObj = {
-        token : token,
-        tokenEXP: oneHour
-    };
-    user.update(newObj, {where: {email: user.email}})
-    .then((result) => {
-        console.log( result );
-        return res.status(200).json({success:true, userId: user.id});
-    })
-   }
-   else{
-       console.log("비밀번호 불일치");
-       return res.status(500).json({success: false});
-   }
+          const { token, tokenEXP } = generateToken(user);
+
+          res.cookie("x_auth", token).status(200);
+          res.cookie("x_authEXP", tokenEXP);
+
+          user.update({ token: token, tokenEXP: tokenEXP }, { where: { email: user.email } })
+              .then(() => {
+                  return res.status(200).json({ success: true, userId: user.id });
+              });
+      } else {
+          console.log("비밀번호 불일치");
+          return res.status(500).json({ success: false });
+      }
   });
-  })
+});
+
       
    
 router.get("/logout", auth, (req, res) => {
@@ -111,7 +120,7 @@ router.get("/logout", auth, (req, res) => {
   models.User.update(newObj, {where: {id: req.user.id}})
   .then((err, result) => {
       if(err) return res.json({ success: false, err});
-      console.log( result );
+      // console.log( result );
       return res.status(200).json({success:true});
 })
 
