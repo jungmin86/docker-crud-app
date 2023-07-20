@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 
 
+
 router.get('/auth', auth, (req, res) => {
   //여기까지 미들웨어를 통과해 왔다 -> Authentication이 true
   return res.status(200).json( {
@@ -50,28 +51,7 @@ router.get('/login', function(req, res, next) {
 });
 
 
-const comparePassword = (plainPassword, hashedPassword, salt) => {
-  let hashPassword = crypto.createHash("sha512").update(plainPassword + salt).digest("hex");
-  return hashPassword === hashedPassword;
-};
 
-const generateToken = (user) => {
-  const token = jwt.sign(
-      {
-          id: user.dataValues.id
-      },
-      "secretToken",
-      {
-          expiresIn: '1h'
-      }
-  );
-  const oneHour = moment().add(1, 'hour').valueOf();
-
-  return {
-      token: token,
-      tokenEXP: oneHour
-  };
-};
 
 router.post("/login", (req, res, next) => {
   models.User.findOne({
@@ -90,15 +70,15 @@ router.post("/login", (req, res, next) => {
       let inputPassword = req.body.password;
       let salt = user.dataValues.salt;
 
-      if (comparePassword(inputPassword, dbPassword, salt)) {
+      if (user.comparePassword(inputPassword, dbPassword, salt)) {
           console.log("비밀번호 일치");
 
-          const { token, tokenEXP } = generateToken(user);
+          const { token, tokenEXP } = user.generateToken(user);
 
           res.cookie("x_auth", token).status(200);
           res.cookie("x_authEXP", tokenEXP);
 
-          user.update({ token: token, tokenEXP: tokenEXP }, { where: { email: user.email } })
+          user.update({ token: token, tokenEXP: user.tokenEXP }, { where: { email: user.email } })
               .then(() => {
                   return res.status(200).json({ success: true, userId: user.id });
               });

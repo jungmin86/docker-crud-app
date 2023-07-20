@@ -13,10 +13,11 @@
     "frontend": "npm run start --prefix ../frontend",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix ../frontend\""
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5050",
   "author": "John ahn",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

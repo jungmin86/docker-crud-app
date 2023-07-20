@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const moment = require('moment');
 
 
 'use strict';
@@ -56,9 +58,35 @@ let User = (Sequelize, DataTypes) => {
             freezeTableName: true
         }
     );
+
+        model.prototype.comparePassword = function(plainPassword, hashedPassword, salt) {
+            let hashPassword = crypto.createHash("sha512").update(plainPassword + salt).digest("hex");
+            return hashPassword === hashedPassword;
+        };
+      
+      model.prototype.generateToken = function(user) {
+        const token = jwt.sign(
+          {
+            id: user.dataValues.id
+          },
+          "secretToken",
+          {
+            expiresIn: '1h'
+          }
+        );
+        const oneHour = moment().add(1, 'hour').valueOf();
+      
+        return {
+          token: token,
+          tokenEXP: oneHour
+        };
+      };
+
     return model;
 }
 
+
+  
 // User.comparePassword = function(plainPassword){
 //     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
 //         if (err) return cb(err);
