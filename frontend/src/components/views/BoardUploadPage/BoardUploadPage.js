@@ -15,10 +15,10 @@ const PrivateOptions= [
 ]
 
 const CategoryOptions = [
-    {value: 0, label: "Film & Animation"},
-    {value: 1, label: "Autos & Veghicles"},
-    {value: 2, label: "Music"},
-    {value: 3, label: "Pets & Animals"}
+    {value: 0, label: "Coding"},
+    {value: 1, label: "Weight Training"},
+    {value: 2, label: "Football"},
+    {value: 3, label: "Pets"}
 ]
 
 
@@ -27,7 +27,7 @@ function BoardUploadPage(props) {
     const [BoardTitle, setBoardTitle] = useState("") //리액트 훅 기능
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState(0)
-    const [Category, setCategory] = useState("Film & Animation")
+    const [Category, setCategory] = useState("Coding")
     const [FilePath, setFilePath] = useState("")
     const [Duration, setDuration] = useState("")
     const [Thumbnail, setThumbnail] = useState("")
@@ -56,9 +56,9 @@ function BoardUploadPage(props) {
         const config = {
             header: { 'content-type': 'multipart/form-data' } //파일을 올릴 때는 header에 content-type을 해줘야 오류를 막을 수 있다
         }
-        formData.append("file", files[0])
+        formData.append("file", files[0]);
 
-        Axios.post('/api/board/uploadfiles', formData, config)
+        Axios.post('localhost:5050/api/board/uploadfiles', formData, config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
@@ -81,7 +81,7 @@ function BoardUploadPage(props) {
                         }
                     } )
                 } else {
-                    alert("비디오 업로드를 실패했습니다.")
+                    alert("게시글 업로드를 실패했습니다.")
                 }
             })
 
@@ -110,7 +110,7 @@ function BoardUploadPage(props) {
                 }, 3000);  
                 
             } else {
-                alert("비디오 업로드 실패요~")
+                alert("게시글 업로드 실패요~")
             }
         })
     }
@@ -148,7 +148,7 @@ function BoardUploadPage(props) {
 
                     {Thumbnail && //썸네일이 있을 때에만
                     <div>
-                        <img src={`http://localhost:5000/${Thumbnail}`} alt="thumbnail"></img>
+                        <img src={`http://localhost:5050/${Thumbnail}`} alt="thumbnail"></img>
                     </div>
                     }
                     <div>

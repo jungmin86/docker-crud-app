@@ -21,6 +21,7 @@ app.get('/', function(req, res){
 });
 
 app.use('/api/users', require('./routes/users.js'));
+app.use('/api/board', require('./routes/boards.js'));
 
 app.listen(5050, function() {
     console.log('Server Running at http://127.0.0.1:');
