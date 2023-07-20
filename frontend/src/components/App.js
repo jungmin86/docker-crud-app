@@ -7,7 +7,7 @@ import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
-import VideoUploadPage from "./views/VideoUploadPage/VideoUploadPage.js"
+import BoardUploadPage from './views/BoardUploadPage/BoardUploadPage';
 import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage.js';
 import SubscriptionPage from './views/SubscriptionPage/SubscriptionPage.js';
 
@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/" component={Auth(LandingPage, null)} /> //아무나 들어갈 수 있음
           <Route exact path="/login" component={Auth(LoginPage, false)} /> //로그인한 사람은 못 들어감
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
-          <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} /> //로그인한 사람만 들어갈 수 잇음
+          <Route exact path="/board/upload" component={Auth(BoardUploadPage, true)} /> //로그인한 사람만 들어갈 수 잇음
           <Route exact path="/video/:videoId" component={Auth(VideoDetailPage, null)} />
           <Route exact path="/subscription" component={Auth(SubscriptionPage, null)} />
         </Switch>

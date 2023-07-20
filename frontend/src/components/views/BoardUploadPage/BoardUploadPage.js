@@ -22,9 +22,9 @@ const CategoryOptions = [
 ]
 
 
-function VideoUploadPage(props) {
+function BoardUploadPage(props) {
     const user = useSelector(state => state.user);
-    const [VideoTitle, setVideoTitle] = useState("") //리액트 훅 기능
+    const [BoardTitle, setBoardTitle] = useState("") //리액트 훅 기능
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState(0)
     const [Category, setCategory] = useState("Film & Animation")
@@ -34,7 +34,7 @@ function VideoUploadPage(props) {
 
     const onTitleChange = (e) => { //e: 이벤트
         // console.log(e.currentTarget.value)
-        setVideoTitle(e.currentTarget.value)
+        setBoardTitle(e.currentTarget.value)
     }
 
     const onDescriptionChange = (e) => {
@@ -58,7 +58,7 @@ function VideoUploadPage(props) {
         }
         formData.append("file", files[0])
 
-        Axios.post('/api/video/uploadfiles', formData, config)
+        Axios.post('/api/board/uploadfiles', formData, config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
@@ -70,7 +70,7 @@ function VideoUploadPage(props) {
 
                     setFilePath(response.data.url)
 
-                    Axios.post('/api/video/thumbnail', variable)
+                    Axios.post('/api/board/thumbnail', variable)
                     .then(response => { console.log("됐다");
                         if(response.data.success) {
                             console.log(response.data);
@@ -91,7 +91,7 @@ function VideoUploadPage(props) {
         
         const variables = {
             writer: user.userData._id,
-            title: VideoTitle,
+            title: BoardTitle,
             description: Description,
             privacy: Private,
             filePath: FilePath,
@@ -99,7 +99,7 @@ function VideoUploadPage(props) {
             duration: Duration,
             thumbnail: Thumbnail
         }
-        Axios.post('/api/video/uploadVideo', variables)
+        Axios.post('/api/board/uploadBoard', variables)
         .then(response => {
             if(response.data.success) {
 
@@ -119,7 +119,7 @@ function VideoUploadPage(props) {
     return ( 
         <div style={{maxWidth: '700px', margin: '2rem auto'}}>
             <div style = {{textAlign: 'center', marginBottom: '2rem'}}>
-                <Title level={2}>Upload Video</Title>
+                <Title level={2}>Upload Board</Title>
             </div>
 
             <Form onSubmit={onSubmit}>
@@ -161,7 +161,7 @@ function VideoUploadPage(props) {
                 <label>Title</label>
                 <Input
                     onChange = {onTitleChange}
-                    value = {VideoTitle}
+                    value = {BoardTitle}
                 />
                 <br />
                 <br />
@@ -200,4 +200,4 @@ function VideoUploadPage(props) {
     )
 }
 
-export default VideoUploadPage
+export default BoardUploadPage
