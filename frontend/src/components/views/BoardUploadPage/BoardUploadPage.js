@@ -58,7 +58,7 @@ function BoardUploadPage(props) {
         }
         formData.append("file", files[0]);
 
-        Axios.post('localhost:5050/api/board/uploadfiles', formData, config)
+        Axios.post('/api/board/uploadfiles', formData, config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
@@ -81,7 +81,7 @@ function BoardUploadPage(props) {
                         }
                     } )
                 } else {
-                    alert("게시글 업로드를 실패했습니다.")
+                    alert("썸네일 업로드를 실패했습니다.")
                 }
             })
 

@@ -7,7 +7,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination:  (req, file, cb) => {
-        cb(null, 'uploads/')
+        cb(null, '../uploads/')
     },
     filename:  (req, file, cb) => {
         cb(null, `${Date.now()}_${file.originalname}`)
@@ -24,14 +24,16 @@ const fileFilter = (req, file, cb) => {
     } 
 
 
-const upload = multer({ storage: storage, fileFilter: fileFilter}).single("file");
+const upload = multer({ storage: storage, fileFilter: fileFilter }).single("file");
 
 router.post('/uploadfiles', function(req, res) {
     upload(req, res, err => {
         if(err) {
+            console.log(err);
             return res.json({ success: false, err });
         }
-        return res.json({ success: true, url: res.req.file.path, fileName: req.req.file.fileName })
+        console.log("썸네일 등록 완료")
+        return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.fileName })
     })
 })
 
