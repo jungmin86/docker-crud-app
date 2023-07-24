@@ -29,7 +29,7 @@ function BoardUploadPage(props) {
     const [Private, setPrivate] = useState(0)
     const [Category, setCategory] = useState("Coding")
     const [FilePath, setFilePath] = useState("")
-    const [Duration, setDuration] = useState("")
+    // const [Duration, setDuration] = useState("")
     const [Thumbnail, setThumbnail] = useState("")
 
     const onTitleChange = (e) => { //e: 이벤트
@@ -68,13 +68,13 @@ function BoardUploadPage(props) {
                         fileName: response.data.fileName
                     }
 
-                    setFilePath(response.data.url)
-
+                    setFilePath(response.data.url);
+                    
                     Axios.post('/api/board/thumbnail', variable)
-                    .then(response => { console.log("됐다");
+                    .then(response => { 
                         if(response.data.success) {
-                            console.log(response.data);
-                            setDuration(response.data.fileDuration)
+                            console.log("썸네일", response.data);
+                            // setDuration(response.data.fileDuration)
                             setThumbnail(response.data.url)
                         } else {
                             alert("썸네일 생성에 실패했습니다.")
@@ -96,7 +96,7 @@ function BoardUploadPage(props) {
             privacy: Private,
             filePath: FilePath,
             category: Category,
-            duration: Duration,
+            // duration: Duration,
             thumbnail: Thumbnail
         }
         Axios.post('/api/board/uploadBoard', variables)
@@ -148,7 +148,7 @@ function BoardUploadPage(props) {
 
                     {Thumbnail && //썸네일이 있을 때에만
                     <div>
-                        <img src={`http://localhost:5050/${Thumbnail}`} alt="thumbnail"></img>
+                        <img src={`http://localhost:5050/${Thumbnail}`} alt="thumbnail" ></img>
                     </div>
                     }
                     <div>

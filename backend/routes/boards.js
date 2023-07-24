@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
     const typeArray = file.mimetype.split('/');
     const fileType = typeArray[1].toLowerCase();
-        console.log(fileType)
+        // console.log(fileType)
         if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png' || fileType === 'gif') {
             cb(null, true);
         }
@@ -33,9 +33,15 @@ router.post('/uploadfiles', function(req, res) {
             return res.json({ success: false, err });
         }
         console.log("썸네일 등록 완료")
-        return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.fileName })
+        return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename })
     })
 })
+
+router.post('/thumbnail', (req, res) => {
+    let filePath = "";
+    filePath = "../uploads/thumbnails/" + req.body.fileName;
+    return res.json({ success: true, url: filePath });
+});
 
 
 module.exports = router;
