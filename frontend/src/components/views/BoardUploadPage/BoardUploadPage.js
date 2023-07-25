@@ -150,7 +150,7 @@ function BoardUploadPage(props) {
 
                     {Thumbnail && //썸네일이 있을 때에만
                     <div>
-                        <img src={`http://localhost:5050/${Thumbnail}`} alt="thumbnail" ></img>
+                        <img src={Thumbnail} alt="thumbnail" ></img>
                     </div>
                     }
                     <div>

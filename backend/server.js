@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { request } = require('http');
 const cookieParser = require('cookie-parser');
 const cors  = require('cors');
+const path = require('path');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +20,8 @@ app.get('/', function(req, res){
     success: true
    })
 });
+
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/board', require('./routes/boards.js'));

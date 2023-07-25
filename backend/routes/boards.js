@@ -4,10 +4,11 @@ const router = express.Router();
 
 const { auth } = require('../middleware/auth');
 const multer = require('multer');
+const path = require('path');
 
 const storage = multer.diskStorage({
     destination:  (req, file, cb) => {
-        cb(null, 'uploads/')
+        cb(null, path.join(__dirname, '../../uploads/'))
     },
     filename:  (req, file, cb) => {
         cb(null, `${Date.now()}_${file.originalname}`)
@@ -32,14 +33,13 @@ router.post('/uploadfiles', function(req, res) {
             console.log(err);
             return res.json({ success: false, err });
         }
-        console.log("썸네일 등록 완료")
+        console.log("썸네일 등록 완료", req.file.path);
         return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename })
     })
 })
 
 router.post('/thumbnail', (req, res) => {
-    let filePath = "";
-    filePath = "backend/uploads/" + req.body.fileName;
+    let filePath = path.join(__dirname, '../../uploads/', req.body.fileName); // 절대 경로로 수정
     return res.json({ success: true, url: filePath });
 });
 
