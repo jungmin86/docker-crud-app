@@ -9,6 +9,8 @@ import { ConsoleSqlOutlined, PropertySafetyFill } from '@ant-design/icons';
 const { TextArea } = Input;
 const { Title } = Typography;
 
+
+
 const PrivateOptions= [
     {value: 0, label: "Private"},
     {value: 1, label: "Public"}
@@ -75,7 +77,7 @@ function BoardUploadPage(props) {
                         if(response.data.success) {
                             console.log("썸네일", response.data);
                             // setDuration(response.data.fileDuration)
-                            setThumbnail(response.data.url)
+                            setThumbnail(response.data.url);
                         } else {
                             alert("썸네일 생성에 실패했습니다.")
                         }
