@@ -21,7 +21,7 @@ app.get('/', function(req, res){
    })
 });
 
-app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+app.use('/uploads', express.static('uploads'));
 
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/board', require('./routes/boards.js'));
