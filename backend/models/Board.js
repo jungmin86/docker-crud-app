@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 
 class Board extends Model {
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'writer', as: 'writer' });
+    this.belongsTo(models.User, { foreignKey: 'writer', as: 'user' });
   }
 }
 

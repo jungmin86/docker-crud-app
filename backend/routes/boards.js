@@ -69,12 +69,13 @@ router.get('/getBoards', (req, res) => {
       include: [
         {
           model: models.User,
+          as: 'writer', // Use the alias 'boards' to specify the association
           attributes: ['id', 'name', 'lastname', 'email'],
         },
       ],
     })
       .then((boards) => {
-        console.log("들어옴")
+        console.log("들어옴");
         res.status(200).json({ success: true, boards });
       })
       .catch((err) => {
@@ -82,6 +83,7 @@ router.get('/getBoards', (req, res) => {
         return res.status(400).send(err);
       });
   });
+  
   
 module.exports = router;
   

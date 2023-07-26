@@ -13,14 +13,18 @@ const sequelize = new Sequelize(
     config
 );
 
-// dictionary.key = value -> 이렇게 새로운 키와 값을 넣어준 것이다.
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-// 결국 const db = {"sequelize" : sequelize, "Sequelize" : Sequelize}; 이런 형태
+
 
 // ./Visitor.js에서 module.exports에 있는 Visitor 함수를 불러오는데 바로 실행시켜서 return된 model이 db.Visitor에 담긴다.
 db.User = require("./User.js")(sequelize, Sequelize);
 db.Board = require("./Board.js")(sequelize, Sequelize);
 
+db.User.associate(db);
+db.Board.associate(db);
+
+// dictionary.key = value -> 이렇게 새로운 키와 값을 넣어준 것이다.
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+// 결국 const db = {"sequelize" : sequelize, "Sequelize" : Sequelize}; 이런 형태
 // db를 내보내준다.
 module.exports = db;
