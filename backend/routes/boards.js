@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const { Board } = require('../models/Board');
+const models = require('../models');
 
 const { auth } = require('../middleware/auth');
 const multer = require('multer');
-const path = require('path');
+
 
 const storage = multer.diskStorage({
     destination: function(req,file,cb){
@@ -41,6 +41,26 @@ router.post('/uploadfiles', function(req, res) {
 router.post('/thumbnail', (req, res) => {
     let filePath = "uploads/" + req.body.fileName;
     return res.json({ success: true, url: filePath });
+});
+
+router.post('/uploadBoard', (req, res) => {
+    const { writer, title, description, privacy, filePath, category, thumbnail } = req.body;
+    models.Board.create({
+        writer,
+        title,
+        description,
+        privacy,
+        filePath,
+        category,
+        views: 0, // Set default views to 0
+        thumbnail: thumbnail===filePath? null : thumbnail // Set default thumbnail to null or provide a default value if needed
+      })
+      .then( response => {
+        return res.status(200).json({ success : true });
+    })
+    .catch(err => {
+        return res.json({ success: false, err });
+    }) 
 });
 
 

@@ -92,7 +92,7 @@ function BoardUploadPage(props) {
         e.preventDefault(); //원래 클릭을 하면 하려고 했던 것들을 방지
         
         const variables = {
-            writer: user.userData._id,
+            writer: user.userData.id,
             title: BoardTitle,
             description: Description,
             privacy: Private,
@@ -108,11 +108,11 @@ function BoardUploadPage(props) {
                 message.success("성공적으로 업로드를 했습니다.")
 
                 setTimeout(() => {
-                    props.history.push('/')
+                    props.history.push('/');
                 }, 3000);  
                 
             } else {
-                alert("게시글 업로드 실패요~")
+                alert("게시글 업로드를 실패했습니다.");
             }
         })
     }
