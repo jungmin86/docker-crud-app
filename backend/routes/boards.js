@@ -53,7 +53,8 @@ router.post('/uploadBoard', (req, res) => {
         filePath,
         category,
         views: 0, // Set default views to 0
-        thumbnail: thumbnail===filePath? null : thumbnail // Set default thumbnail to null or provide a default value if needed
+        // thumbnail: thumbnail===filePath? null : thumbnail 
+        thumbnail
       })
       .then( response => {
         return res.status(200).json({ success : true });
@@ -63,5 +64,26 @@ router.post('/uploadBoard', (req, res) => {
     }) 
 });
 
-
+router.get('/getBoards', (req, res) => {
+    models.Board.findAll({
+      include: [
+        {
+          model: models.User,
+          attributes: ['id', 'name', 'lastname', 'email'],
+        },
+      ],
+    })
+      .then((boards) => {
+        console.log("들어옴")
+        res.status(200).json({ success: true, boards });
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(400).send(err);
+      });
+  });
+  
 module.exports = router;
+  
+
+

@@ -103,6 +103,7 @@ function BoardUploadPage(props) {
         }
         Axios.post('/api/board/uploadBoard', variables)
         .then(response => {
+            console.log(response)
             if(response.data.success) {
 
                 message.success("성공적으로 업로드를 했습니다.")
