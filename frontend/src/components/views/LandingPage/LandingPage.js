@@ -35,10 +35,10 @@ function LandingPage() {
         // var seconds = Math.floor(board.duration - minutes * 60);
 
         return <Col lg={6} md={8} xs={24}>
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%', paddingBottom: '100%' }}>
                  <a href={`/board/${board.id}`} >   
-                <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:5050/${board.thumbnail}`} />
-                <div className=" duration"
+                <img style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} alt="thumbnail" src={`http://localhost:5050/${board.thumbnail}`} />
+                <div className="duration"
                     style={{ bottom: 0, right:0, position: 'absolute', margin: '4px', 
                     color: '#fff', backgroundColor: 'rgba(17, 17, 17, 0.8)', opacity: 0.8, 
                     padding: '2px 4px', borderRadius:'2px', letterSpacing:'0.5px', fontSize:'12px',
@@ -49,13 +49,14 @@ function LandingPage() {
             </div><br />
             <Meta
                 avatar={
-                    <Avatar src={board.writer.image} />
+                    <Avatar src={board.user.image} />
                 }
                 title={board.title}
             />
-            <span>{board.writer.name} </span><br />
-            <span style={{ marginLeft: '3rem' }}> {board.views}</span>
-            - <span> {moment(board.createdAt).format("MMM Do YY")} </span>
+            <span>{board.user.lastname}{board.user.name} </span><br />
+            <span style={{ marginLeft: '3rem' }}> {moment(board.createdAt).format("YYYY-MM-DD")} </span>
+              <span>{board.views} views </span>
+            
         </Col>
 
     })

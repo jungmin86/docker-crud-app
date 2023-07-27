@@ -14,8 +14,6 @@ const sequelize = new Sequelize(
 );
 
 
-
-// ./Visitor.js에서 module.exports에 있는 Visitor 함수를 불러오는데 바로 실행시켜서 return된 model이 db.Visitor에 담긴다.
 db.User = require("./User.js")(sequelize, Sequelize);
 db.Board = require("./Board.js")(sequelize, Sequelize);
 
