@@ -32,7 +32,6 @@ class User extends Model {
     };
   }
 
-  // You can add other prototype methods here if needed
 }
 
 module.exports = (sequelize, DataTypes) => {

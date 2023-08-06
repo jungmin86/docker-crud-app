@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
-function SideVideo() {
+function SideBoard() {
 
-    const [sideVideos, setSideVideos] = useState([])
+    const [sideBoards, setSideBoards] = useState([])
 
     useEffect(() => {
-        Axios.get('/api/video/getVideos')
+        Axios.get('/api/board/getBoards')
         .then(response => {
             if(response.data.success) {
-                console.log(response.data.video)
-                setSideVideos(response.data.video)
+                console.log(response.data.boards)
+                setSideBoards(response.data.boards)
             } else {
                 alert('비디오 가져오기를 실패했습니다.')
             }
         })
     }, [])
 
-    const renderSideVideo = sideVideos.map((video, index) => {
+    const renderSideBoard = sideBoards.map((board, index) => {
 
-        var minutes = Math.floor(video.duration / 60);
-        var seconds = Math.floor(video.duration - minutes * 60);
+        // var minutes = Math.floor(video.duration / 60);
+        // var seconds = Math.floor(video.duration - minutes * 60);
 
         return <div key={index} style={{ display: 'flex', marginBottom: '1rem', padding: '0 2rem' }}>
         <div style={{ width: '40%', marginRight: '1rem' }}>
             <a href={`/video/${video._id}`}>
-                <img style={{ width: '100%', height: '100%' }} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail"/>
+                <img style={{ width: '100%', height: '100%' }} src={`http://localhost:5000/${board.thumbnail}`} alt="thumbnail"/>
             </a>
         </div> 
 
         <div style={ { width: '50%'}}>
             <a href="" style={{color: "gray"}}>
-                <span style={ {fontSize: '1rem', color: 'black'}}>{video.title}</span><br />
-                <span>{video.writer.name}</span><br />
+                <span style={ {fontSize: '1rem', color: 'black'}}>{board.title}</span><br />
+                <span>{board.user.lastname}{board.user.name} </span><br />
                 <span>{video.views} views</span><br />
-                <span>{minutes}: {seconds}</span><br />
+                {/* <span>{minutes}: {seconds}</span><br /> */}
             </a>
 
         </div>
@@ -44,11 +44,11 @@ function SideVideo() {
     return (
         <React.Fragment>
             <div style={{marginTop: '3rem'}} />
-        {renderSideVideo}
+        {renderSideBoard}
     </React.Fragment>
 
         
     )
 }
 
-export default SideVideo;
+export default SideBoard;
