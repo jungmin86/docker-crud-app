@@ -85,36 +85,38 @@ router.get('/getBoards', (req, res) => {
   });
   
 router.post('/getBoardDetail', (req, res) => {
-    // models.Board.findOne({
-    //     where: { id: req.body.boardId },
-    //     include: [{ model: models.User, as: 'user', attributes: ['id', 'name', 'lastname', 'email'] }]
-    // })
-    // .then((board) => {
-    //     if (!board) {
-    //         return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
-    //       }
-    //     res.status(200).json({ success: true, board });
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     return res.status(400).send(err);
-    //   });
-    try {
-        const board =  models.Board.findOne({
-          where: { id: req.body.videoId },
-          include: [{ model: models.User, as: 'user', attributes: ['id', 'name', 'lastname', 'email'] }]
-        });
-        console.log("ㅇㅇㅇㅇㅇㅇ:", board);
+    models.Board.findOne({
+        where: { id: req.body.boardId },
+        include: [{ model: models.User, as: 'user', attributes: ['id', 'name', 'lastname', 'email'] }]
+    })
+    .then((board) => {
+        console.log(board);
         if (!board) {
-          return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
-        }
-    
+            return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
+          }
         res.status(200).json({ success: true, board });
-      } catch (err) {
+      })
+      .catch((err) => {
         console.error(err);
-        res.status(500).json({ success: false, message: '서버 에러 발생' });
-      }
-});
+        return res.status(400).send(err);
+      });
+    });
+//     try {
+//         const board =  models.Board.findOne({
+//           where: { id: req.body.boardId },
+//           include: [{ model: models.User, as: 'user', attributes: ['id', 'name', 'lastname', 'email'] }]
+//         });
+//         console.log("ㅇㅇㅇㅇㅇㅇ:", board);
+//         if (!board) {
+//           return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
+//         }
+    
+//         res.status(200).json({ success: true, board });
+//       } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ success: false, message: '서버 에러 발생' });
+//       }
+// });
     
   
 module.exports = router;

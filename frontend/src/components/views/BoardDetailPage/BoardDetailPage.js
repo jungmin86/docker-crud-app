@@ -26,7 +26,8 @@ function BoardDetailPage(props) {
         Axios.post('/api/board/getBoardDetail', variable)
             .then(response => {
                 if(response.data.success) {
-                    setBoardDetail(response.data.BoardDetail);
+                    console.log(response.data.board);
+                    setBoardDetail(response.data.board);
                 } else {
                     alert('비디오 정보를 가져오길 실패했습니다.');
                 }
