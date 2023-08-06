@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {Row, Col,  Avatar, List} from 'antd';
 import Axios from "axios";
+
 // import { response } from "express";
 
 // import Subscribe from './Sections/Subscribe.js';
@@ -28,6 +29,7 @@ function BoardDetailPage(props) {
                 if(response.data.success) {
                     console.log(response.data.board);
                     setBoardDetail(response.data.board);
+
                 } else {
                     alert('비디오 정보를 가져오길 실패했습니다.');
                 }
@@ -58,16 +60,18 @@ function BoardDetailPage(props) {
             <Row gutter={[16,16]}>
                 <Col lg={18} xs={24}>
     
-                    <div style={{width: '100%', padding: '3rem 4rem'}}>
-                    <img style={{ width: '100%' }} src={`http://localhost:5000/${BoardDetail.filePath}`} alt="게시글 이미지"></img>
+                <div style={{ width: '100%', padding: '3rem 4rem', position: 'relative', overflow: 'hidden' }}>
+  <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={`http://localhost:5050/${BoardDetail.filePath}`} alt="게시글 이미지" />
     
                         <List.Item
                             actions
                             >
                                 <List.Item.Meta
-                                    avatar
-                                    title
-                                    description
+                                    avatar={<Avatar src={BoardDetail.user && BoardDetail.user.image} />}
+                                    title={<span>
+                                        {BoardDetail.user.lastname}{BoardDetail.user.name}
+                                      </span>}
+                                    description={BoardDetail.description}
                                 />
                         </List.Item>
     

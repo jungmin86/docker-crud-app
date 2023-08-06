@@ -90,7 +90,7 @@ router.post('/getBoardDetail', (req, res) => {
         include: [{ model: models.User, as: 'user', attributes: ['id', 'name', 'lastname', 'email'] }]
     })
     .then((board) => {
-        console.log(board);
+        console.log("우영창", board);
         if (!board) {
             return res.status(404).json({ success: false, message: '게시글을 찾을 수 없습니다.' });
           }
