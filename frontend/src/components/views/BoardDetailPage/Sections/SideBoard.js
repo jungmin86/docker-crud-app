@@ -23,9 +23,9 @@ function SideBoard() {
         // var seconds = Math.floor(video.duration - minutes * 60);
 
         return <div key={index} style={{ display: 'flex', marginBottom: '1rem', padding: '0 2rem' }}>
-        <div style={{ width: '40%', marginRight: '1rem' }}>
-            <a href={`/video/${video._id}`}>
-                <img style={{ width: '100%', height: '100%' }} src={`http://localhost:5000/${board.thumbnail}`} alt="thumbnail"/>
+        <div style={{ width: '40%', marginRight: '1rem', position: 'relative', overflow: 'hidden' }}>
+            <a href={`/board/${board.id}`}>
+                <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={`http://localhost:5050/${board.thumbnail}`} alt="thumbnail"/>
             </a>
         </div> 
 
@@ -33,7 +33,7 @@ function SideBoard() {
             <a href="" style={{color: "gray"}}>
                 <span style={ {fontSize: '1rem', color: 'black'}}>{board.title}</span><br />
                 <span>{board.user.lastname}{board.user.name} </span><br />
-                <span>{video.views} views</span><br />
+                <span>{board.views} views</span><br />
                 {/* <span>{minutes}: {seconds}</span><br /> */}
             </a>
 

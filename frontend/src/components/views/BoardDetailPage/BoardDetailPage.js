@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import {Row, Col,  Avatar, List} from 'antd';
 import Axios from "axios";
 
+import SideBoard from "./Sections/SideBoard";
+
 // import { response } from "express";
 
 // import Subscribe from './Sections/Subscribe.js';
@@ -60,8 +62,8 @@ function BoardDetailPage(props) {
             <Row gutter={[16,16]}>
                 <Col lg={18} xs={24}>
     
-                <div style={{ width: '100%', padding: '3rem 4rem', position: 'relative', overflow: 'hidden' }}>
-  <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={`http://localhost:5050/${BoardDetail.filePath}`} alt="게시글 이미지" />
+                <div style={{ width: '100%', height: '100%', padding: '3rem 4rem', position: 'relative', overflow: 'hidden' }}>
+  <img style={{ width: '100%', height: '60%', objectFit: 'cover' }} src={`http://localhost:5050/${BoardDetail.filePath}`} alt="게시글 이미지" />
     
                         <List.Item
                             actions
@@ -80,7 +82,7 @@ function BoardDetailPage(props) {
                     </div>
                 </Col>
                 <Col lg={6} xs={24}>
-                    {/* <SideBoard /> */}
+                    <SideBoard />
                 </Col>
             </Row>
     
