@@ -28,7 +28,7 @@ function Subscribe(props) {
         Axios.post('/api/subscribe/subscribed', subscribedVariable)
             .then(response => {
                 if(response.data.success) {
-                    // console.log(response.data.subscribed) //true
+                    console.log(response.data.subscribed) //true
                     setSubscribed(response.data.subscribed)
                     // console.log(Subscribed) //false
                 } else {
@@ -77,8 +77,8 @@ function Subscribe(props) {
             color: 'white', padding: '10px 16px',
             fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase'
      }} 
-     onClick={onSubscribe} >
-            {SubscribeNumber}{Subscribed ? 'Subscribed': 'Subscribe'}
+     onClick >
+            {SubscribeNumber} {Subscribed? 'Subscribed' : 'Subscribe'}
         </button>
     </div>
     )

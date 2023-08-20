@@ -16,6 +16,7 @@ const sequelize = new Sequelize(
 
 db.User = require("./User.js")(sequelize, Sequelize);
 db.Board = require("./Board.js")(sequelize, Sequelize);
+db.Subscriber = require("./Subscriber.js")(sequelize, Sequelize);
 
 db.User.associate(db);
 db.Board.associate(db);

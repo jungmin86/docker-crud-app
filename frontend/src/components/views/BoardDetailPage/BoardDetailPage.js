@@ -7,7 +7,8 @@ import SideBoard from "./Sections/SideBoard";
 
 // import { response } from "express";
 
-// import Subscribe from './Sections/Subscribe.js';
+import Subscribe from './Sections/Subscribe.js';
+
 // import Comment from './Sections/Comment.js';
 // import LikeDislikes from './Sections/LikeDislikes.js'
 
@@ -25,6 +26,7 @@ function BoardDetailPage(props) {
 
 
     useEffect(() => {
+        
 
         Axios.post('/api/board/getBoardDetail', variable)
             .then(response => {
@@ -52,10 +54,10 @@ function BoardDetailPage(props) {
     //     setComments(Comments.concat(newComment));
     // }
     
-    // const subscribeButton = VideoDetail && VideoDetail.writer && (VideoDetail.writer._id !== localStorage.getItem('userId')) 
-    //     && <Subscribe 
-    //     userTo={VideoDetail.writer && VideoDetail.writer._id} 
-    //     userFrom={localStorage.getItem('userId')} />
+    const subscribeButton = BoardDetail && BoardDetail.user && (BoardDetail.user.id !== localStorage.getItem('userId')) 
+        && <Subscribe 
+        userTo={BoardDetail.user && BoardDetail.user.id} 
+        userFrom={localStorage.getItem('userId')} />
     if(BoardDetail.user) {
         return (
             
@@ -66,7 +68,7 @@ function BoardDetailPage(props) {
   <img style={{ width: '100%', height: '60%', objectFit: 'cover' }} src={`http://localhost:5050/${BoardDetail.filePath}`} alt="게시글 이미지" />
     
                         <List.Item
-                            actions
+                            actions={[subscribeButton]}
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src={BoardDetail.user && BoardDetail.user.image} />}

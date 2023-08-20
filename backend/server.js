@@ -25,6 +25,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/board', require('./routes/boards.js'));
+app.use('/api/subscribe', require('./routes/subscribe.js'));
 
 app.listen(5050, function() {
     console.log('Server Running at http://127.0.0.1:');
