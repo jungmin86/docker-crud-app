@@ -20,6 +20,7 @@ db.Subscriber = require("./Subscriber.js")(sequelize, Sequelize);
 
 db.User.associate(db);
 db.Board.associate(db);
+db.Subscriber.associate(db);
 
 // dictionary.key = value -> 이렇게 새로운 키와 값을 넣어준 것이다.
 db.sequelize = sequelize;

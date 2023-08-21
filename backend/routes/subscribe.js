@@ -16,17 +16,63 @@ router.post('/subscribeNumber', async (req, res) => {
     }
   });
 
-  router.post('/subscribed', async (req, res) => {
-    models.Subscriber.find({ 'userTo': req.body.userTo, 'userFrom': req.body.userFrom })
-    .exec((err, subscribe) => {
-        if(err) return res.status(400).send(err);
-        let result = false;
-        if(subscribe.length !== 0) {
-            result = true;
+router.post('/subscribed', async (req, res) => {
+    try {
+        const userTo = req.body.userTo;
+        const userFrom = req.body.userFrom;
+
+        const subscribe = await models.Subscriber.findOne({
+            where: { userTo, userFrom }
+        });
+
+        if (subscribe) {
+            res.status(200).json({ success: true, subscribed: true });
+        } else {
+            res.status(200).json({ success: true, subscribed: false });
         }
-        res.status(200).json({ success: true, subscribed: result });
-    })
-  });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+});
+
+router.post('/unSubscribe', async (req, res) => {
+    try {
+        const userTo = req.body.userTo;
+        const userFrom = req.body.userFrom;
+    
+        const deletedSubscriber = await models.Subscriber.destroy({
+          where: { userTo, userFrom },
+        });
+    
+        if (deletedSubscriber) { //지워진 게 있으면 (삭제 된 레코드의 수가 반환됨)
+          res.status(200).json({ success: true });
+        } else {
+          res.status(400).json({ success: false, message: '구독 취소에 실패했습니다.' });
+        }
+      } catch (error) {
+        res.status(500).json({ success: false, message: '구독 취소 중에 오류가 발생했습니다.' });
+      }
+});
+router.post('/subscribe', async (req, res) => {
+    try {
+        const userTo = req.body.userTo;
+        const userFrom = req.body.userFrom;
+    
+        const subscriber = await models.Subscriber.create({
+          userTo,
+          userFrom,
+        });
+    
+        if (subscriber) {
+          res.status(200).json({ success: true });
+        } else {
+          res.status(400).json({ success: false, message: '구독에 실패했습니다.' });
+        }
+      } catch (error) {
+        res.status(500).json({ success: false, message: '구독 중에 오류가 발생했습니다.' });
+      }
+
+});
   
 
 module.exports = router;
