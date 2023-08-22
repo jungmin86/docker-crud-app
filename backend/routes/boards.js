@@ -118,8 +118,37 @@ router.post('/getBoardDetail', (req, res) => {
 //       }
 // });
     
-  
+router.post('/getSubscriptionBoards', async (req, res) => {
+  try {
+    // 자신이 구독하는 사람들을 찾는다.
+    const subscriberInfo = await models.Subscriber.findAll({
+      where: { userFrom: req.body.userFrom },
+      attributes: ['userTo'],
+    });
+    
+    const subscribedUser = subscriberInfo.map(subscriber => subscriber.userTo);
+
+    // 구독한 사람들의 게시글을 가져온다.
+    const boards = await models.Board.findAll({
+      where: { writer: subscribedUser },
+      include: {
+        model: models.User,
+        as: 'user',
+      },
+    });
+
+    res.status(200).json({ success: true, boards });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: '구독한 사람들의 게시글을 가져오는 중에 오류가 발생했습니다.' });
+  }
+});
+
+
 module.exports = router;
+
+
+
   
 
 

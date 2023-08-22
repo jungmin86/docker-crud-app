@@ -8,7 +8,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize:'1rem'
         }}>
-           <p> WootCamp  <Icon type="smile" /></p>
+           <p> Hell Errday  <Icon type="smile" /></p>
         </div>
     )
 }

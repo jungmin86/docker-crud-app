@@ -9,6 +9,7 @@ import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 import BoardUploadPage from './views/BoardUploadPage/BoardUploadPage';
 import BoardDetailPage from './views/BoardDetailPage/BoardDetailPage';
+import SubscriptionPage from './views/SubscriptionPage/SubscriptionPage';
 
 
 //null   Anyone Can go inside
@@ -26,7 +27,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/board/upload" component={Auth(BoardUploadPage, true)} /> //로그인한 사람만 들어갈 수 잇음
           <Route exact path="/board/:boardId" component={Auth(BoardDetailPage, null)} />
-          {/* <Route exact path="/subscription" component={Auth(SubscriptionPage, null)} /> */}
+          <Route exact path="/subscription" component={Auth(SubscriptionPage, null)} />
         </Switch>
       </div>
       <Footer />
