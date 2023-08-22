@@ -4,6 +4,7 @@ const models = require('../models');
 
 const { auth } = require('../middleware/auth');
 const multer = require('multer');
+const { Op } = require('sequelize');
 
 
 const storage = multer.diskStorage({
@@ -130,7 +131,9 @@ router.post('/getSubscriptionBoards', async (req, res) => {
 
     // 구독한 사람들의 게시글을 가져온다.
     const boards = await models.Board.findAll({
-      where: { writer: subscribedUser },
+      where: { writer: {
+        [Op.in]: subscribedUser, // $in 연산자 사용
+      }, }, 
       include: {
         model: models.User,
         as: 'user',
