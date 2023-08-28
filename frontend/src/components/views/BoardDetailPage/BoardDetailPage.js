@@ -38,7 +38,7 @@ function BoardDetailPage(props) {
                     console.log(response.data.board);
                     setBoardDetail(response.data.board);
                     if (response.data.board.user) {
-                        setIsDifferentUser(response.data.board.user.id !== localStorage.getItem('userId'));
+                        setIsDifferentUser(response.data.board.user.id !== Number(localStorage.getItem('userId')));
                     }
 
                 } else {
@@ -61,7 +61,7 @@ function BoardDetailPage(props) {
         if(BoardDetail.user) {
             console.log(BoardDetail.user.id);
             console.log(localStorage.getItem('userId'));
-            console.log(isDifferentUser);
+            console.log(isDifferentUser, "3");
         }
          
     });
