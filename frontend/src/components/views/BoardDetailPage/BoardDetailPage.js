@@ -9,6 +9,9 @@ import SideBoard from "./Sections/SideBoard";
 
 import Subscribe from './Sections/Subscribe.js';
 
+
+
+
 // import Comment from './Sections/Comment.js';
 // import LikeDislikes from './Sections/LikeDislikes.js'
 
@@ -20,7 +23,8 @@ function BoardDetailPage(props) {
     const boardId = props.match.params.boardId;
     const variable = {boardId: boardId}
 
-    const [BoardDetail, setBoardDetail] = useState([]);
+    const [BoardDetail, setBoardDetail] = useState({});
+    const [isDifferentUser, setIsDifferentUser] = useState(false);
     // const [Comments, setComments] = useState([])
     
 
@@ -33,6 +37,9 @@ function BoardDetailPage(props) {
                 if(response.data.success) {
                     console.log(response.data.board);
                     setBoardDetail(response.data.board);
+                    if (response.data.board.user) {
+                        setIsDifferentUser(response.data.board.user.id !== localStorage.getItem('userId'));
+                    }
 
                 } else {
                     alert('비디오 정보를 가져오길 실패했습니다.');
@@ -48,17 +55,30 @@ function BoardDetailPage(props) {
         //     }
         // })
 
-    }, []);
+    }, [boardId]);
+
+    useEffect(() => {
+        if(BoardDetail.user) {
+            console.log(BoardDetail.user.id);
+            console.log(localStorage.getItem('userId'));
+            console.log(isDifferentUser);
+        }
+         
+    });
+
 
     // const refreshFunction = (newComment)=> {
     //     setComments(Comments.concat(newComment));
     // }
-    
-    const subscribeButton = BoardDetail && BoardDetail.user && (BoardDetail.user.id !== localStorage.getItem('userId')) 
-        && <Subscribe 
-        userTo={BoardDetail.user && BoardDetail.user.id} 
-        userFrom={localStorage.getItem('userId')} />
+
+
+      
+
     if(BoardDetail.user) {
+        const subscribeButton = isDifferentUser && <Subscribe 
+            userTo={BoardDetail.user.id} 
+            userFrom={localStorage.getItem('userId')} 
+        />;
         return (
             
             <Row gutter={[16,16]}>

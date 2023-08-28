@@ -28,7 +28,7 @@ function Subscribe(props) {
         Axios.post('/api/subscribe/subscribed', subscribedVariable)
             .then(response => {
                 if(response.data.success) {
-                    console.log(response.data.subscribed) //true
+                    // console.log(response.data.subscribed) //true
                     setSubscribed(response.data.subscribed)
                     // console.log(Subscribed) //false
                 } else {
