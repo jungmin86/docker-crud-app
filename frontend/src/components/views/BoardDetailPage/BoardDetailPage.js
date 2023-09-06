@@ -8,11 +8,7 @@ import SideBoard from "./Sections/SideBoard";
 // import { response } from "express";
 
 import Subscribe from './Sections/Subscribe.js';
-
-
-
-
-// import Comment from './Sections/Comment.js';
+import Comment from './Sections/Comment.js';
 // import LikeDislikes from './Sections/LikeDislikes.js'
 
 
@@ -25,7 +21,7 @@ function BoardDetailPage(props) {
 
     const [BoardDetail, setBoardDetail] = useState({});
     const [isDifferentUser, setIsDifferentUser] = useState(false);
-    // const [Comments, setComments] = useState([])
+    const [Comments, setComments] = useState([]);
     
 
 
@@ -55,7 +51,7 @@ function BoardDetailPage(props) {
         //     }
         // })
 
-    }, [boardId]);
+    }, []);
 
     useEffect(() => {
         if(BoardDetail.user) {
@@ -67,9 +63,9 @@ function BoardDetailPage(props) {
     });
 
 
-    // const refreshFunction = (newComment)=> {
-    //     setComments(Comments.concat(newComment));
-    // }
+    const refreshFunction = (newComment)=> {
+        setComments(Comments.concat(newComment));
+    }
 
 
       
@@ -100,7 +96,7 @@ function BoardDetailPage(props) {
                         </List.Item>
     
                         {/* comments */}
-                        {/* <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId}/> */}
+                        <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={boardId}/>
                     </div>
                 </Col>
                 <Col lg={6} xs={24}>

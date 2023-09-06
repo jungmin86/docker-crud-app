@@ -7,6 +7,7 @@ const moment = require('moment');
 class User extends Model {
   static associate(models) {
     this.hasMany(models.Board, { foreignKey: 'writer', as: 'boards' });
+    this.hasMany(models.Comment, { foreignKey: 'writer', as: 'comments' });
   }
 
   comparePassword(plainPassword, hashedPassword, salt) {

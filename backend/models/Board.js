@@ -4,6 +4,7 @@ const { Model } = require('sequelize');
 class Board extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'writer', as: 'user' });
+    this.hasMany(models.Comment, { foreignKey: 'postId', as: 'comments' });
   }
 }
 

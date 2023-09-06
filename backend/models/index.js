@@ -17,10 +17,12 @@ const sequelize = new Sequelize(
 db.User = require("./User.js")(sequelize, Sequelize);
 db.Board = require("./Board.js")(sequelize, Sequelize);
 db.Subscriber = require("./Subscriber.js")(sequelize, Sequelize);
+db.Comment = require("./Comment.js")(sequelize, Sequelize);
 
 db.User.associate(db);
 db.Board.associate(db);
 db.Subscriber.associate(db);
+db.Comment.associate(db);
 
 // dictionary.key = value -> 이렇게 새로운 키와 값을 넣어준 것이다.
 db.sequelize = sequelize;

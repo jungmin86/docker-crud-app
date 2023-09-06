@@ -6,8 +6,8 @@ import ReplyComment from "./ReplyComment.js";
 
 function Comment(props) {
 
-    const videoId = props.postId;
-    // console.log(videoId)
+    const boardId = props.postId;
+    // console.log(boardId)
     const user = useSelector(state => state.user);
     const [CommentValue, setCommentValue] = useState("");
 
@@ -20,8 +20,8 @@ function Comment(props) {
 
         const variables = {
             content: CommentValue,
-            writer: user.userData._id,
-            postId: videoId,
+            writer: user.userData.id,
+            postId: boardId,
         }
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
